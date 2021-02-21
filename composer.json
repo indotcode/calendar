@@ -1,0 +1,19 @@
+{
+    "name": "indotcode/calendar",
+    "license": "MIT",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "indotcode",
+            "email": "tinarskiy@bk.ru"
+        }
+    ],
+    "minimum-stability": "dev",
+    "keywords": ["Laravel", "Сalendar"],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Indotcode\\Calendar\\": "src/"
+        }
+    }
+}
