@@ -12,7 +12,7 @@ class View
         Items::elements($calendar, $option['elements']);
 //        $calendar->item(date('Y-m-d'), ['name' => 'Вася']);
         $data['calendar'] = $calendar->get();
-        dump($data);
+//        dump($data);
         return view('calendar::calendar', $data);
     }
 
