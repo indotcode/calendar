@@ -160,3 +160,17 @@
 .calendar__navigation-date-year{
   margin-bottom:5px;
 }
+
+.calendar__dayWeek-cell-mini{
+  display:none;
+}
+
+@media (max-width:1024px){
+  .calendar__dayWeek-cell-full{
+    display:none;
+  }
+
+  .calendar__dayWeek-cell-mini{
+    display:block;
+  }
+}

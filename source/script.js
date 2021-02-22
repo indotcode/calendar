@@ -18,3 +18,5 @@ import "./style.scss";
 //   el: '#app',
 //   render: h => h(App)
 // })
+
+import "./components/calendar/calendar"
