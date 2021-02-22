@@ -2,6 +2,12 @@
 
 ![Скриншот календаря](https://raw.githubusercontent.com/indotcode/calendar/master/screenshots/screenshot.png "Орк")
 
+### Установка Composer
+
+```text
+composer require indotcode/calendar
+```
+
 ### Подключения
 
 **Файл:** config/app.php
