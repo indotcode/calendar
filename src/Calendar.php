@@ -9,17 +9,16 @@ class Calendar
     {
         $calendar = new Data($option);
         $data['calendar'] = $calendar->get();
-        dump($data);
         return view('calendar::calendar', $data);
     }
 
-    public static function css()
+    public static function css($option = [])
     {
-        return view('calendar::css');
+        return view('calendar::css', $option);
     }
 
     public static function js()
     {
-        return view('calendar::css');
+        return view('calendar::js');
     }
 }
