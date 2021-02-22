@@ -55,5 +55,5 @@ php artisan vendor:publish --provider="Indotcode\Calendar\CalendarServiceProvide
 #### Скрипты
 
 ```blade
-{{\Indotcode\Calendar\Calendar::js()}}
+{{\Indotcode\Calendar\View::js()}}
 ```
