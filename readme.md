@@ -25,17 +25,21 @@ php artisan vendor:publish --provider="Indotcode\Calendar\CalendarServiceProvide
 #### Календарь
 
 ```blade
-{{\Indotcode\Calendar\Calendar::view()}}
+{{\Indotcode\Calendar\View::get()}}
+
+или
+
+{!! $calendar !!} // Обработка через Controller
 ```
 
 #### Стили
 
 ```blade
-{{\Indotcode\Calendar\Calendar::css()}}
+{{\Indotcode\Calendar\View::css()}}
 
-and
+или
 
-{{\Indotcode\Calendar\Calendar::css(
+{{\Indotcode\Calendar\View::css(
     ['font_family' => 'Roboto'])
 }}
 ```

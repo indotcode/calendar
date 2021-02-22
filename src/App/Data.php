@@ -171,12 +171,15 @@ class Data implements CalendarInterface
         return $this;
     }
 
-    public function item($date, $params = [])
+    public function item($date, $views, $params = [])
     {
         if($this->config['show_elapsed_date'] == 0 && strtotime($date) < strtotime($this->currentDate)){
             return $this;
         }
-        $this->item[$date][] = $params;
+        $this->item[$date][] = [
+            'views' => $views,
+            'params' => $params
+        ];
         return $this;
     }
 

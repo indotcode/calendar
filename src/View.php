@@ -1,14 +1,18 @@
 <?php
 namespace Indotcode\Calendar;
 
+use Indotcode\Calendar\Abstracts\Items;
 use Indotcode\Calendar\App\Data;
 
-class Calendar
+class View
 {
-    public static function view($option = [])
+    public static function get($option = [])
     {
         $calendar = new Data($option);
+        Items::elements($calendar, $option['elements']);
+//        $calendar->item(date('Y-m-d'), ['name' => 'Вася']);
         $data['calendar'] = $calendar->get();
+        dump($data);
         return view('calendar::calendar', $data);
     }
 
