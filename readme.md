@@ -1,5 +1,6 @@
 ## Календарь для Laravel
 
+![Скриншот календаря](https://raw.githubusercontent.com/indotcode/calendar/master/screenshots/screenshot.png "Орк")
 
 ### Подключения
 
@@ -36,7 +37,9 @@ and
 
 **Параметры:**
 
-- font_family (string) - Название шрифта. Пример: 'Roboto'
+| Имя | Тип | Описание | Пример
+|:----------------|:---------|:----------------|:----|
+| font_family | string | Название шрифта | 'Roboto' |
 
 
 #### Скрипты
