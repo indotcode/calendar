@@ -27,8 +27,8 @@ class CalendarServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/routes/web.php');
         $this->loadViewsFrom(__DIR__.'/views', 'calendar');
         $this->publishes([
-            __DIR__ . '/assets/css' => public_path('calendar'),
-            __DIR__ . '/assets/js' => public_path('calendar'),
+            __DIR__ . '/../assets/css' => public_path('calendar'),
+            __DIR__ . '/../assets/js' => public_path('calendar'),
         ], 'public');
 
 //        $this->publishes([
