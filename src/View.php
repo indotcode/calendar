@@ -9,10 +9,8 @@ class View
     public static function get($option = [])
     {
         $calendar = new Data($option);
-        Items::elements($calendar, $option['elements']);
-//        $calendar->item(date('Y-m-d'), ['name' => 'Вася']);
+        Items::elements($calendar, $option);
         $data['calendar'] = $calendar->get();
-//        dump($data);
         return view('calendar::calendar', $data);
     }
 
