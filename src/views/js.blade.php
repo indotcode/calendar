@@ -1,1 +1,1 @@
-<script src="{{ asset('calendar/script.js') }}"></script>
+<script src="{{ asset('calendar/js/script.js') }}"></script>

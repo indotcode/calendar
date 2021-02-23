@@ -20,40 +20,38 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    border-bottom: 1px solid rgba(166,168,179,.25);
 }
 
 .calendar__dayWeek-cell{
-    width: calc(100% / 7 - 20px);
-    padding: 10px;
+    width: calc(100% / 7);
     text-align: center;
     font-weight: bold;
-
+    border-bottom: 2px solid rgba(166,168,179,.25);
+    padding: 10px 0;
 }
 
 .calendar__days{
     display: flex;
-    align-items: center;
+    align-items: normal;
     flex-wrap: wrap;
-    border-left: 1px solid rgba(166,168,179,.25);
+    border-left: 2px solid rgba(166,168,179,.25);
 }
 
 .calendar__days-cell{
-    width: calc(100% / 7 - 21px);
-    padding: 10px;
-    text-align: center;
-    border-bottom: 1px solid rgba(166,168,179,.25);
-    border-right: 1px solid rgba(166,168,179,.25);
-    min-height: 80px;
+    width: calc(100% / 7 - 2px);
+    border-bottom: 2px solid rgba(166,168,179,.25);
+    border-right: 2px solid rgba(166,168,179,.25);
+    min-height: 110px;
 }
 
 .calendar__days-cell--yellow{
     background-color: rgba(237,255,48,.20);
 }
 
-.calendar__days-cell--green{
-    background-color: rgba(81,232,68,.20);
-}
+
+//.calendar__days-cell--green{
+//    background-color: rgba(81,232,68,.20);
+//}
 
 
 .calendar-item{
@@ -66,10 +64,17 @@
 
 .calendar-item__day{
     position: absolute;
-    right: 0;
-    top: 0;
-    font-size: 10px;
-    line-height: 10px;
+    right: 5px;
+    top: 5px;
+    font-size: 11px;
+    background-color: #e6e6e6;
+    width: 20px;
+    height: 20px;
+    color: #868686;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
 }
 
 .calendar-item__day--yellow{
@@ -147,6 +152,43 @@
 
 .calendar__dayWeek-cell-mini{
     display: none;
+}
+
+
+.calendar-list{
+
+}
+
+.calendar-list__item{
+    padding: 10px;
+    border-bottom: 2px solid rgb(233 233 236);
+    &--blue{
+        background-color: #028cf9;
+        color: #fff;
+    }
+    &--black{
+        background-color: #000000;
+        color: #fff;
+    }
+    &--green{
+        background-color: #02dd10;
+        color: #fff;
+    }
+    &--white{
+        background-color: white;
+        color: black;
+    }
+    &--red{
+        background-color: red;
+        color: #ffffff;
+    }
+    &:last-child{
+        border-bottom-width: 0;
+    }
+}
+
+.calendar-list__itemTitle{
+    font-size: 12px;
 }
 
 @media all and (max-width: 1024px) {

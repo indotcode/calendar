@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="{{ asset('calendar/style.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ asset('calendar/css/style.css') }}" />
 @if(!empty($font_family) && $font_family !== '')
     <style type="text/css">
         .calendar{

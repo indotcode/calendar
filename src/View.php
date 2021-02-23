@@ -11,6 +11,7 @@ class View
         $calendar = new Data($option);
         Items::elements($calendar, $option);
         $data['calendar'] = $calendar->get();
+//        dump($data);
         return view('calendar::calendar', $data);
     }
 

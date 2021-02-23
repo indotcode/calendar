@@ -440,7 +440,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.scss */ \"./source/style.scss\");\n/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _components_calendar_calendar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/calendar/calendar */ \"./source/components/calendar/calendar.js\");\n // import $ from \"jquery\";\n//\n// import \"./components/slick-carousel/slick\"\n//\n// import \"@fancyapps/fancybox\"\n//\n// import \"./components/owl-carousel/owl.carousel\"\n// Образец\n// import Vue from 'vue'\n// import App from './vue/App.vue'\n// new Vue({\n//   el: '#app',\n//   render: h => h(App)\n// })\n\n\n\n//# sourceURL=webpack:///./source/script.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.scss */ \"./source/style.scss\");\n/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _components_calendar_calendar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/calendar/calendar */ \"./source/components/calendar/calendar.js\");\n\n\n\n//# sourceURL=webpack:///./source/script.js?");
 
 /***/ }),
 
