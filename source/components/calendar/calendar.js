@@ -1,13 +1,12 @@
 import axios from 'axios';
 
 export function ajaxMonthsYear(elm, type) {
-    console.log(type);
     let data = new FormData();
     data.append('months', elm.getAttribute('data-months'));
     data.append('year', elm.getAttribute('data-year'));
     data.append('id', elm.getAttribute('data-id'));
+    data.append('option', optionCalendar);
     axios.post('/calendar/ajax/'+type, data).then(function (response) {
-        console.log(response);
         switch (type){
             case 'params':
                 document.querySelector('.calendar__navigation-date-year').innerHTML = response.data.current_months;
@@ -29,6 +28,7 @@ export function ajaxMonthsYear(elm, type) {
     });
 }
 (() => {
+    // console.log(option_calendar);
     let prev = document.querySelector('.calendar__navigation-prev');
     if(prev){
         prev.addEventListener('click', (e) => {

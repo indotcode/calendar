@@ -6,12 +6,14 @@ use Indotcode\Calendar\App\Data;
 
 class View
 {
+    private static $option = '';
+
     public static function get($option = [])
     {
         $calendar = new Data($option);
         Items::elements($calendar, $option);
+        self::$option = \GuzzleHttp\json_encode($option);
         $data['calendar'] = $calendar->get();
-//        dump($data);
         return view('calendar::calendar', $data);
     }
 
@@ -22,6 +24,8 @@ class View
 
     public static function js()
     {
-        return view('calendar::js');
+        $data = [];
+        $data['option'] = self::$option;
+        return view('calendar::js', $data);
     }
 }
