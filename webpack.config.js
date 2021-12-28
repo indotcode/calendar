@@ -1,32 +1,32 @@
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const ReplaceInFileWebpackPlugin = require('replace-in-file-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const fs = require('fs');
-const os = require('os');
-const { env } = require('process');
+// const ExtractTextPlugin = require('extract-text-webpack-plugin');
+// const ReplaceInFileWebpackPlugin = require('replace-in-file-webpack-plugin');
+// const CopyPlugin = require('copy-webpack-plugin');
+// const VueLoaderPlugin = require('vue-loader/lib/plugin');
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const fs = require('fs');
+// const os = require('os');
+// const { env } = require('process');
 
-const server = {
-    port: 3000
-}
-const isProduction = process.argv[process.argv.indexOf('--mode') + 1] === 'production';
+module.exports = (env) => {
 
-module.exports = env => {
-    let mode = isProduction ? 'production' : 'development';
-    let pluginsResult = generateHtmlPlugins('./source/pug');
-    pluginsResult[pluginsResult.length] = new MiniCssExtractPlugin({
-        filename: 'css/style.css'
-    });
+    const type = envVar(env, 'type');
+
+    const mode = type === 'product' ? 'production' : 'development'
+
+    const pathDir = type === 'product' ? path.resolve(__dirname, 'assets') : path.resolve(__dirname, '../../../public/calendar')
+
+    console.log(pathDir)
+
     let output = {
-        path: path.resolve(__dirname, 'assets'),
+        path: pathDir,
         filename: 'js/script.js'
     };
+
     return {
         mode: mode,
         entry: {
@@ -34,52 +34,15 @@ module.exports = env => {
         },
         output: output,
         plugins: [
-            new VueLoaderPlugin(),
-            // new htmlPlugins(),
-            // new HtmlWebpackPlugin({
-            //     filename: 'catalog.html',
-            //     template: './catalog.html'
-            // }),
-            // new CleanWebpackPlugin(),
-            // new ReplaceInFileWebpackPlugin([{
-            //     dir: appPath,
-            //     test: /\.php$/,
-            //     rules: [{
-            //         search: /version/ig,
-            //         replace: '1.0.0'
-            //     },{
-            //         search: '@title',
-            //         replace: function(match){
-            //
-            //         }
-            //     }]
-            // }]),
-            // new CopyPlugin({
-            //     patterns: [
-            //         {
-            //             from: path.resolve(__dirname, path_theme+'/*.php'),
-            //             to: path.resolve(__dirname, path_theme+'/')
-            //         }
-            //     ]
-            // }),
-            // new CopyWebpackPlugin({
-            //     patterns: [
-            //         {
-            //             from: path.resolve(__dirname, 'source/fonts'),
-            //             to: path.resolve(__dirname, 'dist/fonts')
-            //         },
-            //         {
-            //             from: path.resolve(__dirname, 'source/img'),
-            //                 to: path.resolve(__dirname, 'dist/img')
-            //         }
-            //     ]
-            // }),
             new webpack.ProvidePlugin({
                 $: "jquery",
                 jQuery: "jquery",
                 "window.jQuery": "jquery"
+            }),
+            new MiniCssExtractPlugin({
+                filename: 'css/style.css'
             })
-        ].concat(pluginsResult),
+        ],
         module: {
             rules: [
                 {
@@ -115,7 +78,7 @@ module.exports = env => {
                         {
                             loader: MiniCssExtractPlugin.loader,
                             options: {
-                              hmr: mode === 'development',
+                                hmr: mode
                             }
                         },
                         'css-loader',
@@ -177,7 +140,6 @@ module.exports = env => {
                 }
             ]
         },
-        devServer: server,
         resolve: {
             alias: {
                 vue: 'vue/dist/vue.js'
@@ -186,21 +148,26 @@ module.exports = env => {
     };
 };
 
-function generateHtmlPlugins(templateDir) {
-    const templateFiles = fs.readdirSync(path.resolve(__dirname, templateDir));
-    let resultNew = [],
-        id = 0;
-    templateFiles.forEach((v, i) => {
-        const parts = v.split('.');
-        const name = parts[0];
-        const extension = parts[1];
-        if(extension === 'pug'){
-            resultNew[id] = new HtmlWebpackPlugin({
-                filename: `${name}.html`,
-                template: path.resolve(__dirname, `${templateDir}/${name}.${extension}`)
-            })
-            id++;
+
+const envVar = (env, key = '') => {
+    const splitRes = (e) => {
+        const param = e.split("=");
+        return {
+            key: param[0],
+            val: param.length > 1 ? param[1] : true
         }
-    })
-    return resultNew;
-};
+    }
+    let result = [];
+    if(env instanceof Array){
+        let resIt = env.map(item => {
+            return splitRes(item)
+        })
+        result = resIt;
+    } else {
+        let resIt = splitRes(env)
+        result[0] = resIt;
+    }
+    if(key.length === 0) return result;
+
+    return result.find(item => item.key === key).val
+}
