@@ -4,10 +4,8 @@
   "description": "",
   "private": true,
   "scripts": {
-    "dist-development": "webpack --mode development",
-    "dist-production": "webpack --mode production",
-    "watch-development": "webpack --watch --mode development",
-    "watch-production": "webpack --watch --mode production"
+    "product": "webpack --env type=product",
+    "watchDev": "webpack --watch --env type=watchDev"
   },
   "author": "Alex Tinarskiy (tinarskiy@bk.ru)",
   "license": "ISC",
