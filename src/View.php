@@ -1,31 +1,30 @@
 <?php
 namespace Indotcode\Calendar;
 
-use Indotcode\Calendar\Abstracts\Items;
 use Indotcode\Calendar\App\Data;
 
 class View
 {
-    private static $option = '';
+    /**
+     * @var Data
+     */
+    private static $calendar;
 
-    public static function get($option = [])
+    public static function get($config = [])
     {
-        $calendar = new Data($option);
-        Items::elements($calendar, $option);
-        self::$option = \GuzzleHttp\json_encode($option);
-        $data['calendar'] = $calendar->get();
-        return view('calendar::calendar', $data);
+        self::$calendar = new Data();
+        $data = self::$calendar->setCurrentDate()->setConfig($config)->get();
+//        dd($data);
+        return view('calendar::calendar', ['calendar' => $data]);
     }
 
-    public static function css($option = [])
+    public static function css($config = [])
     {
-        return view('calendar::css', $option);
+        return view('calendar::css', $config);
     }
 
     public static function js()
     {
-        $data = [];
-        $data['option'] = self::$option;
-        return view('calendar::js', $data);
+        return view('calendar::js', ['option' => self::$calendar->getConfigJson()]);
     }
 }

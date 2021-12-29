@@ -1,27 +1,16 @@
 <?php
 namespace Indotcode\Calendar\App;
 
-use Indotcode\Calendar\Interfaces\CalendarInterface;
+use Indotcode\Calendar\App\Interfaces\DataInterface;
 
-class Data implements CalendarInterface
+class Data implements DataInterface
 {
-    public $item = [];
-
-    public $config = [
-        'show_elapsed_date' => 1,
+    protected $config = [
         'year' => '1990',
         'months' => '01'
     ];
 
-    public $startDateYear;
-
-    public $stopDateYear;
-
-    public $currentDate;
-
-    public $navigation = ['prev' => [], 'next' => []];
-
-    public $dayWeek = [
+    protected $dayWeek = [
         [
             'id' => 0,
             'name' => 'Понедельник',
@@ -59,7 +48,7 @@ class Data implements CalendarInterface
         ]
     ];
 
-    public $monthsWeek = [
+    protected $monthsWeek = [
         '01' => [
             'name' => 'Январь'
         ],
@@ -98,30 +87,63 @@ class Data implements CalendarInterface
         ]
     ];
 
-    public $markup = [];
+    protected $startDateYear;
 
-    public function __construct($config = [])
+    protected $stopDateYear;
+
+    protected $item = [];
+
+    protected $currentDate;
+
+    protected $navigation = ['prev' => [], 'next' => []];
+
+    protected $markup = [];
+
+    public function getMarkup() : array
     {
-        if(isset($config['show_elapsed_date'])){
-            $this->config['show_elapsed_date'] = $config['show_elapsed_date'];
-        }
-        if(isset($config['year'])){
-            $this->config['year'] = $config['year'];
-        } else {
-            $this->config['year'] = date("Y");
-        }
-        if(isset($config['months'])){
-            $this->config['months'] = $config['months'];
-        } else {
-            $this->config['months'] = date("m");
-        }
-        $this->startDateYear = date($this->config['year']. "-".$this->config['months']."-01");
-        $this->stopDateYear = date('Y-m-d', strtotime('+1 month - 1 day', strtotime($this->startDateYear)));
-        $this->currentDate = date("Y-m-d");
-        $this->__navigation();
+        return $this->markup;
     }
 
-    private function __navigation()
+    public function getDayWeek(): array
+    {
+        return $this->dayWeek;
+    }
+
+    public function getMonthsWeek(): array
+    {
+        return $this->monthsWeek;
+    }
+
+    public function getMonthsWeekKey($key): array
+    {
+        return $this->monthsWeek[$key];
+    }
+
+    public function setConfig($config = []): Data
+    {
+        $config['year'] = $config['year'] ?? date("Y");
+        $config['months'] = $config['months'] ?? date("m");
+        $config['visible_current_date'] = empty($config['visible_current_date']) ? true : $config['visible_current_date'];
+        $this->config = $config;
+        return $this;
+    }
+
+    public function getConfig(): array
+    {
+        return $this->config;
+    }
+
+    public function getConfigJson(): string
+    {
+        return \GuzzleHttp\json_encode($this->getConfig());
+    }
+
+    public function getConfigKey(string $key): string
+    {
+        return $this->getConfig()[$key];
+    }
+
+    private function navigationStructure()
     {
         $prev = explode("-", date('Y-m', strtotime('-15 day', strtotime($this->startDateYear))));
         $next = explode("-", date('Y-m', strtotime('+15 day', strtotime($this->stopDateYear))));
@@ -137,8 +159,26 @@ class Data implements CalendarInterface
         ];
     }
 
-    public function get()
+    public function getNavigation(): array
     {
+        return $this->navigation;
+    }
+
+    private function startStopDate()
+    {
+        $this->startDateYear = date($this->getConfigKey('year'). "-" . $this->getConfigKey('months') . "-01");
+        $this->stopDateYear = date('Y-m-d', strtotime('+1 month - 1 day', strtotime($this->startDateYear)));
+    }
+
+    public function get(): Data
+    {
+        $this->startStopDate();
+        $this->navigationStructure();
+        $this->markupStructure();
+        return $this;
+    }
+
+    private function markupStructure(){
         $dateYear = [];
         $date = $this->startDateYear;
         for($i = 0; $i < 33; $i++){
@@ -163,28 +203,11 @@ class Data implements CalendarInterface
             $var_result['date_exp'] = $date_exp;
             $var_result['type'] = 'acting';
             $var_result['dayWeek'] = $this->dayWeek[$w];
-            $var_result['current'] = ($val ==  $this->currentDate ? "Y" : "N");
-            $var_result['item'] = $this->_itemAndMarkup($val);
+            $var_result['current'] = $this->visibleCurrentDate($val);
+            $var_result['item'] = $this->itemAndMarkup($val);
             $this->markup[$key] = $var_result;
         }
-        $this->_tableCell();
-        return $this;
-    }
 
-    public function item($date, $views, $params = [])
-    {
-        if($this->config['show_elapsed_date'] == 0 && strtotime($date) < strtotime($this->currentDate)){
-            return $this;
-        }
-        $this->item[$date][] = [
-            'views' => $views,
-            'params' => $params
-        ];
-        return $this;
-    }
-
-    private function _tableCell()
-    {
         $resultAr = [];
         $day = $this->markup[0]['dayWeek']['id'] + 1;
         $date_preend = $this->markup[0]['date'];
@@ -200,8 +223,8 @@ class Data implements CalendarInterface
             $prev['date_exp'] = $date_prev_ex;
             $prev['type'] = 'past';
             $prev['dayWeek'] = $this->dayWeek[$date_prev_ex_w];
-            $prev['current'] = ($date_prev ==  $this->currentDate ? "Y" : "N");
-            $prev['item'] = $this->_itemAndMarkup($date_prev);
+            $prev['current'] = $this->visibleCurrentDate($date_prev);
+            $prev['item'] = $this->itemAndMarkup($date_prev);
             $preend[] = $prev;
             $d--;
         }
@@ -227,8 +250,8 @@ class Data implements CalendarInterface
                     $next['date_exp'] = $date_next_ex;
                     $next['type'] = 'past';
                     $next['dayWeek'] = $this->dayWeek[$date_next_ex_w];
-                    $next['current'] = ($date_next ==  $this->currentDate ? "Y" : "N");
-                    $next['item'] = $this->_itemAndMarkup($date_next);
+                    $next['current'] = $this->visibleCurrentDate($date_next);
+                    $next['item'] = $this->itemAndMarkup($date_next);
                     $append[] = $next;
                 }
 
@@ -240,12 +263,34 @@ class Data implements CalendarInterface
         $this->markup = $resultRs;
     }
 
-    private function _itemAndMarkup($date)
+    private function itemAndMarkup($date)
     {
         $result = [];
         if(!empty($this->item[$date])){
             $result = $this->item[$date];
         }
         return $result;
+    }
+
+    public function getCurrentDate(){
+        return $this->currentDate;
+    }
+
+    public function setCurrentDate($date = null) : Data
+    {
+        if(is_null($date)){
+            $this->currentDate = date("Y-m-d");
+        } else {
+            $this->currentDate = $date;
+        }
+        return $this;
+    }
+
+    private function visibleCurrentDate($date): string
+    {
+        if(!$this->getConfigKey('visible_current_date')){
+            return 'N';
+        }
+        return $date == $this->getCurrentDate() ? "Y" : "N";
     }
 }

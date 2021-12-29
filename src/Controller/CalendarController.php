@@ -12,25 +12,20 @@ class CalendarController extends Controller
     public function ajax(Request $request, $name)
     {
         $data = array();
-        $option = \GuzzleHttp\json_decode($request->post('option'), true);
-        $option = (array)$option;
-
-        $option['year'] = $request->post('year');
-        $option['months'] = $request->post('months');
-        $calendar = new Data($option);
-//        Items::elements($calendar, $option);
-//        print_r($option);
+        $config = \GuzzleHttp\json_decode($request->post('option'), true);
+        $config = (array)$config;
+        $config['year'] = $request->post('year');
+        $config['months'] = $request->post('months');
+        $calendar = new Data();
+        $result = $calendar->setCurrentDate()->setConfig($config)->get();
         switch ($name){
             case 'view':
-                Items::elements($calendar, $option);
-                $data['calendar'] = $calendar->get();
-                echo view('calendar::item', $data);
+                echo view('calendar::item', ['calendar' => $result]);
                 break;
             case 'params':
-                $result = $calendar->get();
-                $data['navigation'] = $result->navigation;
-                $data['current_year'] = $result->config['year'];
-                $data['current_months'] = $result->monthsWeek[$result->config['months']]['name'];
+                $data['navigation'] = $result->getNavigation();
+                $data['current_year'] = $result->getConfigKey('year');
+                $data['current_months'] = $result->getMonthsWeekKey($result->getConfigKey('months'))['name'];
                 echo \GuzzleHttp\json_encode($data);
                 break;
         }

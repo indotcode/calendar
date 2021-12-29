@@ -1,38 +1,45 @@
-## Календарь для Laravel
+# Календарь для Laravel
 
 ![Скриншот календаря](https://raw.githubusercontent.com/indotcode/calendar/master/screenshots/screenshot.png "Орк")
 
-### Установка Composer
+## Установка Composer
 
 ```text
 composer require indotcode/calendar
 ```
 
-### Подключения
+## Подключения
 
 **Файл:** config/app.php
 ```php
 Indotcode\Calendar\CalendarServiceProvider::class;
 ```
 
-### Импорт ресурсов
+## Импорт ресурсов
 ```text
 php artisan vendor:publish --provider="Indotcode\Calendar\CalendarServiceProvider"
 ```
 
-### Вызов в шаблоне
+## Вызов в шаблоне
 
-#### Календарь
+### Календарь
 
 ```blade
-{{\Indotcode\Calendar\View::get()}}
-
-или
-
-{!! $calendar !!} // Обработка через Controller
+{{\Indotcode\Calendar\View::get($config = [])}}
 ```
 
-#### Стили
+### Массив конфигурации календаря $config
+
+| Имя          | Тип  | Описание                | Default 
+|:-------------|:-----|:------------------------|:-------|
+| visible_current_date | Boolean | показывать текущюю дату | true   |
+
+#### Пример:
+```php
+
+```
+
+### Стили
 
 ```blade
 {{\Indotcode\Calendar\View::css()}}
@@ -52,7 +59,7 @@ php artisan vendor:publish --provider="Indotcode\Calendar\CalendarServiceProvide
 | font_family | string | Название шрифта | 'Roboto' |
 
 
-#### Скрипты
+### Скрипты
 
 ```blade
 {{\Indotcode\Calendar\View::js()}}

@@ -38,7 +38,7 @@
 }
 
 .calendar__days-cell{
-    width: calc(100% / 7 - 2px);
+    width: calc(100% / 7);
     border-bottom: 2px solid rgba(166,168,179,.25);
     border-right: 2px solid rgba(166,168,179,.25);
     min-height: 110px;
@@ -47,11 +47,6 @@
 .calendar__days-cell--yellow{
     background-color: rgba(237,255,48,.20);
 }
-
-
-//.calendar__days-cell--green{
-//    background-color: rgba(81,232,68,.20);
-//}
 
 
 .calendar-item{
@@ -67,14 +62,17 @@
     right: 5px;
     top: 5px;
     font-size: 11px;
-    background-color: #e6e6e6;
     width: 20px;
     height: 20px;
+    opacity: .7;
     color: #868686;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
+    &--current{
+        color: #54a0ff;
+    }
 }
 
 .calendar-item__day--yellow{
