@@ -2,8 +2,8 @@
 
 namespace Indotcode\Calendar\App\Interfaces;
 
+use Illuminate\View\View;
 use Indotcode\Calendar\App\Data;
-use Indotcode\Calendar\App\Resourse;
 
 interface DataInterface
 {
@@ -11,9 +11,11 @@ interface DataInterface
 
     public function getDayWeek() : array;
 
+    public function getDayWeekKey(string $key) : array;
+
     public function getMonthsWeek() : array;
 
-    public function getMonthsWeekKey(string $key) : array;
+    public function getMonthsWeekId(int $id) : array;
 
     public function setConfig() : Data;
 
@@ -26,6 +28,8 @@ interface DataInterface
     public function get() : Data;
 
     public function getNavigation() : array;
+
+    public function getNavigationView() : View;
 
     public function setCurrentDate(string $date) : Data;
 }

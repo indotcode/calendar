@@ -20,8 +20,6 @@ module.exports = (env) => {
 
     const pathDir = type === 'product' ? path.resolve(__dirname, 'assets') : path.resolve(__dirname, '../../../public/calendar')
 
-    console.log(pathDir)
-
     let output = {
         path: pathDir,
         filename: 'js/script.js'

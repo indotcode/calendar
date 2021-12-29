@@ -25,7 +25,7 @@ class CalendarController extends Controller
             case 'params':
                 $data['navigation'] = $result->getNavigation();
                 $data['current_year'] = $result->getConfigKey('year');
-                $data['current_months'] = $result->getMonthsWeekKey($result->getConfigKey('months'))['name'];
+                $data['current_months'] = $result->getMonthsWeekId($result->getConfigKey('months'))['name'];
                 echo \GuzzleHttp\json_encode($data);
                 break;
         }

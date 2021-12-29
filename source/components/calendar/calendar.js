@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export function ajaxMonthsYear(elm, type) {
+function ajaxMonthsYear(elm, type) {
     let data = new FormData();
     data.append('months', elm.getAttribute('data-months'));
     data.append('year', elm.getAttribute('data-year'));
@@ -27,23 +27,30 @@ export function ajaxMonthsYear(elm, type) {
         }
     });
 }
-(() => {
-    // console.log(option_calendar);
-    let prev = document.querySelector('.calendar__navigation-prev');
-    if(prev){
-        prev.addEventListener('click', (e) => {
-            let elm = e.currentTarget;
-            ajaxMonthsYear(elm, 'view');
-            ajaxMonthsYear(elm, 'params');
-        })
-    }
 
-    let next = document.querySelector('.calendar__navigation-next');
-    if(next){
-        next.addEventListener('click', (e) => {
-            let elm = e.currentTarget;
-            ajaxMonthsYear(elm, 'view');
-            ajaxMonthsYear(elm, 'params');
-        })
+function navigation(){
+    let option = JSON.parse(optionCalendar);
+    if(option.display_navigation){
+        let prev = document.querySelector('.calendar__navigation-prev');
+        if(prev){
+            prev.addEventListener('click', (e) => {
+                let elm = e.currentTarget;
+                ajaxMonthsYear(elm, 'view');
+                ajaxMonthsYear(elm, 'params');
+            })
+        }
+
+        let next = document.querySelector('.calendar__navigation-next');
+        if(next){
+            next.addEventListener('click', (e) => {
+                let elm = e.currentTarget;
+                ajaxMonthsYear(elm, 'view');
+                ajaxMonthsYear(elm, 'params');
+            })
+        }
     }
+}
+
+(() => {
+    navigation()
 })();
