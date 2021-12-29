@@ -28,16 +28,14 @@ php artisan vendor:publish --provider="Indotcode\Calendar\CalendarServiceProvide
 {{\Indotcode\Calendar\View::get($config = [])}}
 ```
 
-### Массив конфигурации календаря $config
+### Массив конфигурации календаря
 
-| Имя          | Тип  | Описание                | Default 
-|:-------------|:-----|:------------------------|:-------|
-| visible_current_date | Boolean | показывать текущюю дату | true   |
-
-#### Пример:
-```php
-
-```
+| Имя                  | Тип     | Описание                     | Default       | Допустимые значения |
+|:---------------------|:--------|:-----------------------------|:--------------|:--------------------|
+| visible_current_date | Boolean | Показывать текущюю дату      | true          | true, false         |
+| year                 | String  | Начальный год                | Текущий год   | от 1990 до 2100     |
+| months               | Integer | Начальный месяц              | Текущий месяц | 1 - 12              |
+| display_navigation   | Boolean | Показывать стрелки навигации | true          | true, false         |
 
 ### Стили
 
@@ -54,8 +52,8 @@ php artisan vendor:publish --provider="Indotcode\Calendar\CalendarServiceProvide
 
 **Параметры:**
 
-| Имя | Тип | Описание | Пример
-|:----------------|:---------|:----------------|:----|
+| Имя         | Тип    | Описание        | Пример   |
+|:------------|:-------|:----------------|:---------|
 | font_family | string | Название шрифта | 'Roboto' |
 
 

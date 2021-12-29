@@ -1,13 +1,14 @@
 <?php
 namespace Indotcode\Calendar\App;
 
+use Illuminate\View\View;
 use Indotcode\Calendar\App\Interfaces\DataInterface;
 
 class Data implements DataInterface
 {
     protected $config = [
         'year' => '1990',
-        'months' => '01'
+        'months' => 1
     ];
 
     protected $dayWeek = [
@@ -109,21 +110,34 @@ class Data implements DataInterface
         return $this->dayWeek;
     }
 
+    public function getDayWeekKey($key): array
+    {
+        return $this->dayWeek[$key];
+    }
+
     public function getMonthsWeek(): array
     {
         return $this->monthsWeek;
     }
 
-    public function getMonthsWeekKey($key): array
+    public function getMonthsWeekId(int $id): array
     {
-        return $this->monthsWeek[$key];
+        if($id < 1 || $id > 12) return $this->getMonthsWeek()['12'];
+        $key = "0";
+        if($id < 10) {
+            $key = $key . $id;
+        } else {
+            $key = (string) $id;
+        }
+        return $this->getMonthsWeek()[$key];
     }
 
     public function setConfig($config = []): Data
     {
         $config['year'] = $config['year'] ?? date("Y");
         $config['months'] = $config['months'] ?? date("m");
-        $config['visible_current_date'] = empty($config['visible_current_date']) ? true : $config['visible_current_date'];
+        $config['visible_current_date'] = $config['visible_current_date'] ?? true;
+        $config['display_navigation'] = $config['display_navigation'] ?? true;
         $this->config = $config;
         return $this;
     }
@@ -155,8 +169,18 @@ class Data implements DataInterface
             'next' => [
                 'months' => $next[1],
                 'year' => $next[0]
-            ]
+            ],
         ];
+        $this->navigation['months_name'] = $this->getMonthsWeekId($this->getConfigKey('months'))['name'];
+        $this->navigation['year'] = $this->getConfigKey('year');
+    }
+
+    public function getNavigationView() : View
+    {
+        if($this->getConfigKey('display_navigation')){
+            return view('calendar::navigation', ['navigation' => $this->navigation]);
+        }
+        return view('calendar::none');
     }
 
     public function getNavigation(): array
@@ -202,7 +226,7 @@ class Data implements DataInterface
             $var_result['date'] = $val;
             $var_result['date_exp'] = $date_exp;
             $var_result['type'] = 'acting';
-            $var_result['dayWeek'] = $this->dayWeek[$w];
+            $var_result['dayWeek'] = $this->getDayWeekKey($w);
             $var_result['current'] = $this->visibleCurrentDate($val);
             $var_result['item'] = $this->itemAndMarkup($val);
             $this->markup[$key] = $var_result;
@@ -222,7 +246,7 @@ class Data implements DataInterface
             $prev['date'] = $date_prev;
             $prev['date_exp'] = $date_prev_ex;
             $prev['type'] = 'past';
-            $prev['dayWeek'] = $this->dayWeek[$date_prev_ex_w];
+            $prev['dayWeek'] = $this->getDayWeekKey($date_prev_ex_w);
             $prev['current'] = $this->visibleCurrentDate($date_prev);
             $prev['item'] = $this->itemAndMarkup($date_prev);
             $preend[] = $prev;
@@ -249,7 +273,7 @@ class Data implements DataInterface
                     $next['date'] = $date_next;
                     $next['date_exp'] = $date_next_ex;
                     $next['type'] = 'past';
-                    $next['dayWeek'] = $this->dayWeek[$date_next_ex_w];
+                    $next['dayWeek'] = $this->getDayWeekKey($date_next_ex_w);
                     $next['current'] = $this->visibleCurrentDate($date_next);
                     $next['item'] = $this->itemAndMarkup($date_next);
                     $append[] = $next;
