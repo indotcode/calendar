@@ -1,0 +1,38 @@
+.calendar-event{
+
+}
+
+.calendar-event__item{
+    padding: 3px;
+    &--blue{
+        background-color: #028cf9;
+        color: #fff;
+    }
+    &--black{
+        background-color: #000000;
+        color: #fff;
+    }
+    &--green{
+        background-color: #02dd10;
+        color: #fff;
+    }
+    &--orange{
+        background-color: #f38f1d;
+        color: #fff;
+    }
+    &--white{
+        background-color: white;
+        color: black;
+    }
+    &--red{
+        background-color: red;
+        color: #ffffff;
+    }
+    &:first-child{
+        padding-right: 20px;
+    }
+}
+
+.calendar-event__title{
+    font-size: 12px
+}
