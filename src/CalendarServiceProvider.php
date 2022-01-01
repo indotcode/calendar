@@ -29,13 +29,5 @@ class CalendarServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../assets' => public_path('calendar')
         ], 'public');
-
-//        $this->publishes([
-//            __DIR__.'/config/config.php' => config_path('indotcodeField.php'),
-//        ]);
-//
-//        $this->publishes([
-//            __DIR__.'/views' => resource_path('views/indotcodeField'),
-//        ]);
     }
 }

@@ -92,8 +92,6 @@ class Data implements DataInterface
 
     protected $stopDateYear;
 
-    protected $item = [];
-
     protected $currentDate;
 
     protected $navigation = ['prev' => [], 'next' => []];
@@ -138,8 +136,15 @@ class Data implements DataInterface
         $config['months'] = $config['months'] ?? date("m");
         $config['visible_current_date'] = $config['visible_current_date'] ?? true;
         $config['display_navigation'] = $config['display_navigation'] ?? true;
+        $config['item'] = $config['item'] ?? [];
+        $config['item_view'] = $config['item_view'] ?? '';
         $this->config = $config;
         return $this;
+    }
+
+    public function getItemView() : string
+    {
+        return $this->getConfigKey('item_view');
     }
 
     public function getConfig(): array
@@ -152,7 +157,7 @@ class Data implements DataInterface
         return \GuzzleHttp\json_encode($this->getConfig());
     }
 
-    public function getConfigKey(string $key): string
+    public function getConfigKey(string $key)
     {
         return $this->getConfig()[$key];
     }
@@ -289,9 +294,13 @@ class Data implements DataInterface
 
     private function itemAndMarkup($date)
     {
+        $item = $this->getConfigKey('item');
+        if(count($item) == 0) return [];
         $result = [];
-        if(!empty($this->item[$date])){
-            $result = $this->item[$date];
+        foreach ($item as $param){
+            if($param['date'] === $date){
+                $result[] = new Item($param, $this);
+            }
         }
         return $result;
     }

@@ -4,7 +4,6 @@ namespace Indotcode\Calendar\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Indotcode\Calendar\Abstracts\Items;
 use Indotcode\Calendar\App\Data;
 
 class CalendarController extends Controller
