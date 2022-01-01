@@ -1,6 +1,6 @@
 # Календарь для Laravel
 
-![Календарь Laravel](https://raw.githubusercontent.com/indotcode/calendar/master/screenshots/logo.png "200рк")
+![Календарь Laravel](https://github.com/indotcode/calendar/tree/new/screenshots/screenshots/logo.png "200рк")
 
 ## Документация
 
