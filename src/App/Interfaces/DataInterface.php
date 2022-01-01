@@ -7,6 +7,8 @@ use Indotcode\Calendar\App\Data;
 
 interface DataInterface
 {
+    public function getItemView() : string;
+
     public function getMarkup() : array;
 
     public function getDayWeek() : array;
@@ -23,7 +25,7 @@ interface DataInterface
 
     public function getConfigJson() : string;
 
-    public function getConfigKey(string $key) : string;
+    public function getConfigKey(string $key);
 
     public function get() : Data;
 

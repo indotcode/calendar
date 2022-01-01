@@ -59,19 +59,20 @@
 
 .calendar-item__day{
     position: absolute;
-    right: 5px;
-    top: 5px;
-    font-size: 11px;
-    width: 20px;
-    height: 20px;
+    right: 2px;
+    top: 2px;
+    font-size: 8px;
+    width: 17px;
+    height: 17px;
     opacity: .7;
-    color: #868686;
+    background-color: #6a6a6a;
+    color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
     &--current{
-        color: #54a0ff;
+        background-color: #54a0ff;
     }
 }
 
@@ -152,40 +153,7 @@
     display: none;
 }
 
-
-.calendar-list{
-
-}
-
-.calendar-list__item{
-    padding: 10px;
-    border-bottom: 2px solid rgb(233 233 236);
-    &--blue{
-        background-color: #028cf9;
-        color: #fff;
-    }
-    &--black{
-        background-color: #000000;
-        color: #fff;
-    }
-    &--green{
-        background-color: #02dd10;
-        color: #fff;
-    }
-    &--white{
-        background-color: white;
-        color: black;
-    }
-    &--red{
-        background-color: red;
-        color: #ffffff;
-    }
-    &:last-child{
-        border-bottom-width: 0;
-    }
-}
-
-.calendar-list__itemTitle{
+.calendar-event__itemTitle{
     font-size: 12px;
 }
 

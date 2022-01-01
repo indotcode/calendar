@@ -14,7 +14,6 @@ class View
     {
         self::$calendar = new Data();
         $data = self::$calendar->setCurrentDate()->setConfig($config)->get();
-//        dd($data);
         return view('calendar::calendar', ['calendar' => $data]);
     }
 
